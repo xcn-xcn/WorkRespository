@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="18.11.1.0">
+<procedure name="CreateShape">
+<interface>
+<io>
+<par name="ROI" base_type="iconic" dimension="0"/>
+</io>
+<oo>
+<par name="ModelContours" base_type="iconic" dimension="0"/>
+<par name="ContoursAffineTrans" base_type="iconic" dimension="0"/>
+</oo>
+<ic>
+<par name="ImageFile" base_type="ctrl" dimension="0"/>
+</ic>
+<oc>
+<par name="ModelID" base_type="ctrl" dimension="0"/>
+</oc>
+</interface>
+<body>
+<l>read_image(Image, ImageFile)</l>
+<l>*  gen_rectangle1 (ROI_0, 197.414, 225.301, 235.883, 366.863)</l>
+<l>* gen_rectangle1 (ROI_0, 453.821, 303.204, 772.34, 611.846)</l>
+<l>reduce_domain(Image, ROI, ImageReduced)</l>
+<c></c>
+<l>create_shape_model(ImageReduced, 'auto', 0, rad(360), 'auto', 'auto', 'use_polarity', 'auto', 'auto', ModelID)</l>
+<l>get_shape_model_contours(ModelContours, ModelID, 1)</l>
+<l>find_shape_model(Image, ModelID, 0, rad(360), 0.5, 1, 0.5, 'least_squares', 0, 0.9, Row, Column, Angle, Score)</l>
+<l>vector_angle_to_rigid(0, 0, 0, Row, Column, Angle, HomMat2D)</l>
+<l>dev_display(Image)</l>
+<l>affine_trans_contour_xld(ModelContours, ContoursAffineTrans, HomMat2D)</l>
+<l>return ()</l>
+</body>
+<docu id="CreateShape">
+<short lang="en_US">initializes image acquisition</short>
+<parameters>
+<parameter id="ContoursAffineTrans"/>
+<parameter id="ImageFile"/>
+<parameter id="ModelContours"/>
+<parameter id="ModelID"/>
+<parameter id="ROI"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

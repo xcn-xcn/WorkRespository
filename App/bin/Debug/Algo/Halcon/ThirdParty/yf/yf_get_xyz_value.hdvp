@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="20.11.1.0">
+<procedure name="yf_get_xyz_value">
+<interface>
+<io>
+<par name="ImageGray" base_type="iconic" dimension="0"/>
+<par name="ImageX" base_type="iconic" dimension="0"/>
+<par name="ImageY" base_type="iconic" dimension="0"/>
+<par name="ImageZ" base_type="iconic" dimension="0"/>
+<par name="RegionPoint" base_type="iconic" dimension="0"/>
+</io>
+<oo>
+<par name="MaskImg" base_type="iconic" dimension="0"/>
+</oo>
+<oc>
+<par name="x_tuples" base_type="ctrl" dimension="0"/>
+<par name="y_tuples" base_type="ctrl" dimension="0"/>
+<par name="z_tuples" base_type="ctrl" dimension="0"/>
+</oc>
+</interface>
+<body>
+<l>count_obj(RegionPoint,Number)</l>
+<l>Z_arraytemp:=[]</l>
+<l>X_arraytemp:=[]</l>
+<l>Y_arraytemp:=[]</l>
+<c></c>
+<l>get_image_size(ImageGray, Width, Height)</l>
+<l>open_window(0, 0, Width, Height, 0, 'buffer', '', WindowHandle)</l>
+<l>disp_obj(ImageGray, WindowHandle)</l>
+<l>set_color(WindowHandle, 'red')</l>
+<l>set_draw(WindowHandle, 'margin')</l>
+<l>disp_obj(RegionPoint, WindowHandle)</l>
+<l>dump_window_image(DupImg,WindowHandle)</l>
+<l>*  write_image(DupImg, 'tiff', 0, '20230114.tif')</l>
+<c></c>
+<l>for Index3 := 1 to Number by 1</l>
+<c>    *处理灰度图</c>
+<l>    select_obj (RegionPoint, RegionSelected, Index3)</l>
+<l>    reduce_domain (ImageGray, RegionSelected, ImageReduced)</l>
+<l>    threshold (ImageReduced, RegionTh, 300, 1055)</l>
+<l>    connection (RegionTh, ConnectedRegions1)</l>
+<l>    select_shape (ConnectedRegions1, SelectedRegions11, 'area', 'and', 100, 200)</l>
+<l>    select_shape (SelectedRegions11, SelectedRegions12, 'circularity', 'and', 0.56, 1)</l>
+<l>    select_shape (SelectedRegions12, SelectedRegions13, 'outer_radius', 'and', 5, 10)</l>
+<l>    count_obj (SelectedRegions13, Number1)</l>
+<l>    if(Number1#1)</l>
+<c>        *报错</c>
+<l>    endif</l>
+<c>    </c>
+<l>    opening_circle (SelectedRegions13, RegionOpening, 3)</l>
+<l>    smallest_circle (RegionOpening, Row1, Column1, Radius1)</l>
+<l>    gen_circle (Circle1, Row1, Column1, 2)</l>
+<l>    get_region_points (Circle1, Rows, Columns)</l>
+<c>    *取Z值</c>
+<l>    get_grayval (ImageZ, Rows, Columns, Grayval)</l>
+<l>    tuple_sort (Grayval, Sorted)</l>
+<l>    tuple_select_range (Sorted, |Sorted|*10/100, |Sorted|*90/100, Selected)</l>
+<l>    Z_arraytemp:=[Z_arraytemp,mean(Selected)]</l>
+<c>    *取X值</c>
+<l>    get_grayval (ImageX, Rows, Columns, Grayval1)</l>
+<l>    tuple_sort (Grayval1, Sorted1)</l>
+<l>    tuple_select_range (Sorted1, |Sorted1|*10/100, |Sorted1|*90/100, Selected1)</l>
+<l>    X_arraytemp:= [X_arraytemp,mean(Selected1)]</l>
+<c>    *取Y值</c>
+<l>    get_grayval (ImageY, Rows, Columns, Grayval2)</l>
+<l>    tuple_sort (Grayval2, Sorted2)</l>
+<l>    tuple_select_range (Sorted2, |Sorted2|*10/100, |Sorted2|*90/100, Selected2)</l>
+<l>    Y_arraytemp:=[Y_arraytemp,mean(Selected2)]   </l>
+<l>endfor</l>
+<c></c>
+<c></c>
+<c></c>
+<l>copy_image(DupImg, MaskImg)</l>
+<l>x_tuples:=number(X_arraytemp$'.2f')</l>
+<l>y_tuples:=number(Y_arraytemp$'.2f')</l>
+<l>z_tuples:=number(Z_arraytemp$'.2f')</l>
+<c></c>
+</body>
+<docu id="yf_get_xyz_value">
+<abstract lang="zh_CN">获取xyz值</abstract>
+<parameters>
+<parameter id="ImageGray">
+<sem_type>image</sem_type>
+<type_list>
+<item>byte</item>
+</type_list>
+</parameter>
+<parameter id="ImageX">
+<sem_type>image</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="ImageY">
+<sem_type>image</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="ImageZ">
+<sem_type>image</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="MaskImg"/>
+<parameter id="RegionPoint">
+<description lang="zh_CN">点位region</description>
+<sem_type>object</sem_type>
+</parameter>
+<parameter id="x_tuples"/>
+<parameter id="y_tuples"/>
+<parameter id="z_tuples"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

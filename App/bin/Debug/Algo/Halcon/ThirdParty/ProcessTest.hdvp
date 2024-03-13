@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="18.11.1.0">
+<procedure name="ProcessTest">
+<interface>
+<io>
+<par name="Image" base_type="iconic" dimension="0"/>
+</io>
+<oo>
+<par name="SelectedRegions" base_type="iconic" dimension="0"/>
+</oo>
+<oc>
+<par name="Area" base_type="ctrl" dimension="0"/>
+</oc>
+</interface>
+<body>
+<c></c>
+<c>*阈值处理</c>
+<l>mean_image(Image, ImageMean, 9, 9)</l>
+<l>threshold(ImageMean, Region, 128, 255)</l>
+<l>connection(Region, ConnectedRegions)</l>
+<l>select_shape(ConnectedRegions, SelectedRegions, 'area', 'and', 0, 31000)</l>
+<l>area_center(SelectedRegions, Area, Row, Column)</l>
+<l>return ()</l>
+</body>
+<docu id="ProcessTest">
+<parameters>
+<parameter id="Area"/>
+<parameter id="Image"/>
+<parameter id="SelectedRegions"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

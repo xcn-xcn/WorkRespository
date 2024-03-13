@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="20.11.1.0">
+<procedure name="yf_get_sort_regoion">
+<interface>
+<oo>
+<par name="RegionSorted" base_type="iconic" dimension="0"/>
+</oo>
+<ic>
+<par name="ImageFile" base_type="ctrl" dimension="0"/>
+</ic>
+</interface>
+<body>
+<l>read_image(Image, ImageFile)</l>
+<c>*灰度提取Mark中心白圆位置</c>
+<l>threshold (Image, Regions, 402, 1023)</l>
+<l>connection (Regions, ConnectedRegions)</l>
+<c>*面积，圆度，直径提取</c>
+<l>select_shape (ConnectedRegions, SelectedRegions, 'area', 'and', 100, 200)</l>
+<l>select_shape (SelectedRegions, SelectedRegions1, 'circularity', 'and', 0.56, 1)</l>
+<l>select_shape (SelectedRegions1, SelectedRegions2, 'outer_radius', 'and', 5, 10)</l>
+<c></c>
+<c>*对区域进行排序</c>
+<l>sort_region (SelectedRegions2, SortedRegions, 'upper_left', 'true', 'column')</l>
+<l>* count_obj (SortedRegions, Number)</l>
+<l>* for Index := 1 to Number by 1</l>
+<l>*     select_obj (SortedRegions, ObjectSelected, Index)</l>
+<l>* endfor</l>
+<c></c>
+<l>smallest_circle (SortedRegions, Row, Column, Radius)</l>
+<l>dev_get_window (WindowHandle)</l>
+<l>point:=[]</l>
+<l>Row2search:=Row</l>
+<l>Col2search:=Column</l>
+<c></c>
+<l>SortedRow:=[]</l>
+<l>SortedCol:=[]</l>
+<c></c>
+<l>Obj2Search:=SortedRegions</l>
+<l>d_set:=200</l>
+<l>while(|Row2search|&gt;0)</l>
+<c>    *左上点   </c>
+<l>    tuple_sort_index ((Row2search+Col2search), Indices)</l>
+<l>    a:=[Row2search[Indices[0]],Col2search[Indices[0]]]</l>
+<c>    </c>
+<c>    *左下点</c>
+<l>    tuple_sort_index ((Col2search-Row2search), Indices1)</l>
+<l>    b:=[Row2search[Indices1[|Indices1|-1]],Col2search[Indices1[|Indices1|-1]]]</l>
+<c>    </c>
+<c>    *画直线</c>
+<l>    RowRemaining:=[]</l>
+<l>    ColRemaining:=[]</l>
+<l>    RowSelected:=[]</l>
+<l>    ColSelected:=[]</l>
+<c>  </c>
+<l>    for Index := 0 to |Row2search|-1 by 1</l>
+<c>        </c>
+<l>        distance_pl (Row2search[Index], Col2search[Index],\
+                     a[0], a[1], b[0], b[1],\
+                     Distance)</l>
+<l>        if(d_set/2&gt;Distance)</l>
+<l>            RowSelected:=[RowSelected,Row2search[Index]]</l>
+<l>            ColSelected:=[ColSelected,Col2search[Index]]</l>
+<l>        else</l>
+<l>            RowRemaining:=[RowRemaining,Row2search[Index]]</l>
+<l>            ColRemaining:=[ColRemaining,Col2search[Index]]</l>
+<l>        endif</l>
+<c>        </c>
+<l>    endfor</l>
+<c>    </c>
+<c></c>
+<l>   tuple_sort_index (ColSelected, Indices2)</l>
+<l>   SortedCol:=[SortedCol,sort(ColSelected)]</l>
+<l>   SortedRow:=[SortedRow,RowSelected[Indices2]]</l>
+<c>   </c>
+<c></c>
+<l>   Row2search:=RowRemaining</l>
+<l>   Col2search:=ColRemaining</l>
+<l>endwhile</l>
+<c></c>
+<l>gen_empty_obj (CircleTest)</l>
+<l>for Index1 := 0  to |SortedRow|-1 by 1</l>
+<c>    </c>
+<l>       gen_circle (Circle, SortedRow[Index1], SortedCol[Index1], 30)</l>
+<c>       </c>
+<c>       </c>
+<l>       if(Index1==0)</l>
+<l>           CircleTest:=Circle</l>
+<l>       else</l>
+<l>           concat_obj (CircleTest, Circle, CircleTest)</l>
+<l>       endif</l>
+<l>       dev_disp_text (Index1, 'image', SortedRow[Index1]+10, SortedCol[Index1], 'black', [], [])</l>
+<c>       </c>
+<c>       *CircleTest是编号好的区域</c>
+<l>endfor</l>
+<l>RegionSorted:=CircleTest</l>
+<l>* write_region (CircleTest, 'CircleTest.hobj')</l>
+</body>
+<docu id="yf_get_sort_regoion">
+<parameters>
+<parameter id="ImageFile"/>
+<parameter id="RegionSorted">
+<description lang="zh_CN">输出为排好序的区域</description>
+<sem_type>region</sem_type>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

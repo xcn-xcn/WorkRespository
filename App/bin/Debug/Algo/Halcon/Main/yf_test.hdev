@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="20.11.1.0">
+<procedure name="main">
+<interface/>
+<body>
+<c>**************************</c>
+<c>*取图程序封装</c>
+<c>********************************</c>
+<c>*是否设置</c>
+<l>bset:=true</l>
+<c></c>
+<c>*是否在线</c>
+<l>bonline:=false</l>
+<c></c>
+<l>if(bonline)</l>
+<l>    yf_grap_3d_image(ImageGray, ImageX, ImageY, ImageZ)</l>
+<l>else</l>
+<c>    *读取所有图片</c>
+<l>    ImagePath:='..\\Images\\yf'</l>
+<l>    ReadImg(ImagePath,ImageFiles)</l>
+<c>    </c>
+<c>    *region路径</c>
+<l>    RegPath:='..\\Settings\\yf'</l>
+<c>    </c>
+<c>    *加载第一张图片进行设置</c>
+<l>    ImageFile:=ImageFiles[5]</l>
+<l>    read_image(Image, ImageFile)</l>
+<l>    dev_display(Image)</l>
+<l>    dev_set_color('red')</l>
+<l>    dev_set_draw('margin')</l>
+<l>    set_system('clip_region', 'true')</l>
+<l>    if(bset)</l>
+<c>        </c>
+<c>        ******************************************</c>
+<c>        *灰度图处理，获取区域并排序</c>
+<c>        ***********************************************</c>
+<l>        yf_get_sort_regoion (RegionSorted, ImageFile)</l>
+<c>        </c>
+<l>        write_region (RegionSorted, RegPath+'\\CircleTest.hobj')</l>
+<l>         read_region (RegionP, RegPath+'\\CircleTest.hobj')</l>
+<l>    else</l>
+<c>        </c>
+<l>        read_region (RegionP, RegPath+'\\CircleTest.hobj')</l>
+<l>    endif</l>
+<l>endif</l>
+<c></c>
+<c></c>
+<c></c>
+<c>*****************************以上是第一次处理程序****************************************</c>
+<c>*****************************以下是取xyz的数据*********************************************</c>
+<c></c>
+<c>*index2就是延锋拍几次，就循环几次</c>
+<l>for Index := 0 to |ImageFiles|/2-1 by 1</l>
+<l>    read_image (ImageHeightP, ImageFiles[2*Index])</l>
+<l>    read_image (ImageGrayP,  ImageFiles[2*Index+1])</l>
+<c>    </c>
+<c>    *预处理</c>
+<l>    Preprocess (ImageHeightP, ImageX, ImageY, ImageZ)</l>
+<c></c>
+<c>    ************************************************************</c>
+<c>    *************从图片中获取xyz值</c>
+<c>    **************************************************************************</c>
+<l> yf_get_xyz_value(ImageGrayP, ImageX, ImageY, ImageZ, RegionP, MaskImg, x_tuples, y_tuples, z_tuples)</l>
+<l>*     fileName:='test.csv'</l>
+<l>*     open_file(fileName,'append',FileHandle)</l>
+<l>*     for Index4 := 0 to |HeightValueArray|-1 by 1</l>
+<l>*         fwrite_string (FileHandle, HeightValueArray[Index4]+',')           </l>
+<l>*     endfor</l>
+<l>*     fwrite_string (FileHandle, '\n')</l>
+<l>*     HeightValueArray:=[]</l>
+<l>*     close_file (FileHandle)   </l>
+<l>    stop()</l>
+<l>endfor</l>
+<c></c>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

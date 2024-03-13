@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="20.11.1.0">
+<procedure name="Preprocess">
+<interface>
+<io>
+<par name="HeightImg" base_type="iconic" dimension="0"/>
+</io>
+<oo>
+<par name="ImageX" base_type="iconic" dimension="0"/>
+<par name="ImageY" base_type="iconic" dimension="0"/>
+<par name="ImageZ" base_type="iconic" dimension="0"/>
+</oo>
+</interface>
+<body>
+<l>get_image_size(HeightImg, Xsize, Ysize)</l>
+<l>* Xsize := 3200</l>
+<l>* Ysize := 1778</l>
+<l>Profinfo:=[1600.0, -5.24288e+007, 22500.0, 3200.0]</l>
+<l>Zpitch := Profinfo[0]</l>
+<l>Zoffset := Profinfo[1]</l>
+<l>Xpitch := Profinfo[2]</l>
+<l>XdataNum := Profinfo[3]</l>
+<l>x_RE:=225</l>
+<l>threshold(HeightImg, ValidRegion, 1, 65535)</l>
+<c>*um</c>
+<c>* Convert to micrometer image</c>
+<c>* Since the parameteter obtained by 'profile_ifo' is in 0.01um, it is divided 100.0.</c>
+<c>* If you want to meter image, devide by 100000.0 instead of 100.0.</c>
+<l>convert_image_type(HeightImg,HeightImageReal,'real')</l>
+<l>scale_image(HeightImageReal,HeightImageUm,Zpitch/100000.0,Zoffset/100000.0)</l>
+<l>reduce_domain(HeightImageUm, ValidRegion , ImageZ)</l>
+<c>*生成y图</c>
+<l>Y_step_mm := 0.100</l>
+<l>gen_image_surface_first_order (ImageY, 'real', Y_step_mm, 0, 0, Ysize/2, 0, Xsize,Ysize)</l>
+<c></c>
+<c>*生成X图</c>
+<l>gen_image_surface_first_order (ImageX, 'real', 0, x_RE/1000.0, 0, 0, Xsize/2, Xsize,Ysize)</l>
+<c></c>
+<c></c>
+<c></c>
+<l>return ()</l>
+</body>
+<docu id="Preprocess">
+<parameters>
+<parameter id="HeightImg"/>
+<parameter id="ImageX"/>
+<parameter id="ImageY"/>
+<parameter id="ImageZ"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

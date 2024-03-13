@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="20.11.1.0">
+<procedure name="yf_grap_3d_image">
+<interface>
+<oo>
+<par name="ImageGray" base_type="iconic" dimension="0"/>
+<par name="ImageX" base_type="iconic" dimension="0"/>
+<par name="ImageY" base_type="iconic" dimension="0"/>
+<par name="ImageZ" base_type="iconic" dimension="0"/>
+</oo>
+</interface>
+<body>
+<c></c>
+<c>   </c>
+<l>* Profinfo:=[1600.0, -5.24288e+007, 22500.0, 3200.0]</l>
+<l>gen_empty_obj (ImageZ)</l>
+<l>Xsize := 3200</l>
+<l>Ysize := 1000</l>
+<l>Device := '192.168.0.1:24691:24692'</l>
+<l>* open_framegrabber ('KeyenceLJXA', 1, 1, 0, 0, 0, 0, 'default', -1, 'default', -1, 'false', 'default', '192.168.0.1:24691:24692', -1, -1, AcqHandle)</l>
+<l>open_framegrabber ('KeyenceLJXA', 1, 1, 0, 0, 0, 0, 'default', -1, 'rgb', -1, 'false', 'default', '192.168.0.1:24691:24692', -1, -1, AcqHandle)</l>
+<l>* open_framegrabber ('KeyenceLJXA', 1, 1, Xsize, Ysize, 0, 0, 'default', -1, 'rgb', -1, 'false', 'default', Device, 1, -1, AcqHandle)</l>
+<l>*open_framegrabber ('KeyenceLJXA', 1, 1, Xsize, Ysize, 0, 0, 'default', -1, 'gray', -1, 'false', 'default', Device, 1, -1, AcqHandle)</l>
+<c></c>
+<c>* You can set a timeout period if necessary (in milliseconds)</c>
+<l>timeout := 10000</l>
+<l>set_framegrabber_param(AcqHandle,'grab_timeout',timeout)</l>
+<l>grab_image_start (AcqHandle, -1)</l>
+<l>grab_image_async (Image, AcqHandle, -1)</l>
+<l>decompose3(Image,HeightImage,ImageGray,ReservedImage)</l>
+<l>get_framegrabber_param(AcqHandle,'profile_info',Profinfo)</l>
+<l>    Zpitch := Profinfo[0]</l>
+<l>    Zoffset := Profinfo[1]</l>
+<l>    Xpitch := Profinfo[2]</l>
+<l>    XdataNum := Profinfo[3]</l>
+<l>    x_RE:=225</l>
+<l>    threshold(HeightImage, ValidRegion, 1, 65535)</l>
+<c>    *um</c>
+<c>    * Convert to micrometer image</c>
+<c>* Since the parameteter obtained by 'profile_ifo' is in 0.01um, it is divided 100.0.</c>
+<c>* If you want to meter image, devide by 100000.0 instead of 100.0.</c>
+<l>convert_image_type(HeightImage,HeightImageReal,'real')</l>
+<l>scale_image(HeightImageReal,HeightImageUm,Zpitch/100000.0,Zoffset/100000.0)</l>
+<l>reduce_domain(HeightImageUm, ValidRegion , HeightImageUmValid)</l>
+<l>ImageZ:=HeightImageUmValid</l>
+<c>*生成y图</c>
+<l>Y_step_mm := 0.100</l>
+<l>gen_image_surface_first_order (ImageY, 'real', Y_step_mm, 0, 0, Ysize/2, 0, Xsize,Ysize)</l>
+<c></c>
+<c>*生成X图</c>
+<l> gen_image_surface_first_order (ImageX, 'real', 0, x_RE/1000.0, 0, 0, Xsize/2, Xsize,Ysize)</l>
+<c> </c>
+<c> </c>
+<l>*  xyz_to_object_model_3d (ImageX, ImageY, ImageZ, ObjectModel3D)</l>
+<l>*  sample_object_model_3d (ObjectModel3D, 'fast', 0.2, [], [], SampledObjectModel3D)</l>
+<l> close_framegrabber (AcqHandle)</l>
+</body>
+<docu id="yf_grap_3d_image">
+<abstract lang="zh_CN">获取基恩士的图片，并输出灰度图和xyz图</abstract>
+<parameters>
+<parameter id="ImageGray">
+<description lang="zh_CN">灰度图</description>
+<sem_type>image</sem_type>
+<type_list>
+<item>byte</item>
+</type_list>
+</parameter>
+<parameter id="ImageX">
+<description lang="zh_CN">x图，单位为mm</description>
+<sem_type>image</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="ImageY">
+<description lang="zh_CN">y图，单位为mm</description>
+<sem_type>image</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="ImageZ">
+<description lang="zh_CN">z图，单位为mm</description>
+<sem_type>image</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

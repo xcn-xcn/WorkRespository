@@ -1,0 +1,11 @@
+E:\兼职\延锋\Kaibo\App\HalconAlgoCtrlLib\bin\Debug\HalconAlgoCtrlLib.dll
+E:\兼职\延锋\Kaibo\App\HalconAlgoCtrlLib\bin\Debug\HalconAlgoCtrlLib.pdb
+E:\兼职\延锋\Kaibo\App\HalconAlgoCtrlLib\bin\Debug\halcondotnet.dll
+E:\兼职\延锋\Kaibo\App\HalconAlgoCtrlLib\bin\Debug\hdevenginedotnet.dll
+E:\兼职\延锋\Kaibo\App\HalconAlgoCtrlLib\bin\Debug\halcondotnet.xml
+E:\兼职\延锋\Kaibo\App\HalconAlgoCtrlLib\bin\Debug\hdevenginedotnet.xml
+E:\兼职\延锋\Kaibo\App\HalconAlgoCtrlLib\obj\Debug\HalconAlgoCtrlLib.csprojAssemblyReference.cache
+E:\兼职\延锋\Kaibo\App\HalconAlgoCtrlLib\obj\Debug\HalconAlgoCtrlLib.csproj.CoreCompileInputs.cache
+E:\兼职\延锋\Kaibo\App\HalconAlgoCtrlLib\obj\Debug\HalconAlgoCtrlLib.csproj.CopyComplete
+E:\兼职\延锋\Kaibo\App\HalconAlgoCtrlLib\obj\Debug\HalconAlgoCtrlLib.dll
+E:\兼职\延锋\Kaibo\App\HalconAlgoCtrlLib\obj\Debug\HalconAlgoCtrlLib.pdb

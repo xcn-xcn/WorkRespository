@@ -1,0 +1,43 @@
+{
+ "module_params": {
+  "10": {
+   "roi": {
+    "type": "ratio",
+    "move_ratio": {
+     "x": 0.016756032,
+     "y": -0.0139442235
+    },
+    "size_ratio": {
+     "x": 0.8914209,
+     "y": 0.8871182
+    }
+   },
+   "height_thresholds": {
+    "NG": 0
+   },
+   "width_thresholds": {
+    "NG": 0
+   },
+   "area_thresholds": {
+    "NG": 448
+   }
+  },
+  "9": {
+   "roi": {
+    "type": "ratio",
+    "move_ratio": {
+     "x": -0.016952615,
+     "y": -0.009521484
+    },
+    "size_ratio": {
+     "x": 0.64256537,
+     "y": 0.8491211
+    }
+   },
+   "score_thresholds": {
+    "dingwei": 0.4
+   },
+   "iou_threshold": 0.1
+  }
+ }
+}

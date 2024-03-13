@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Root xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <OCRData>
+    <Total>2253</Total>
+    <OK>89</OK>
+    <NG>2164</NG>
+  </OCRData>
+</Root>

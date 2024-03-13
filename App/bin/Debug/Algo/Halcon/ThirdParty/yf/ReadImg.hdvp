@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="20.11.1.0">
+<procedure name="ReadImg">
+<interface>
+<ic>
+<par name="ImagePath" base_type="ctrl" dimension="0"/>
+</ic>
+<oc>
+<par name="ImageFiles" base_type="ctrl" dimension="0"/>
+</oc>
+</interface>
+<body>
+<l>list_files (ImagePath, ['files','follow_links'], ImageFiles)</l>
+<l>tuple_regexp_select (ImageFiles, ['\\.(tif|tiff|gif|bmp|jpg|jpeg|jp2|png|pcx|pgm|ppm|pbm|xwd|ima|hobj)$','ignore_case'], ImageFiles)</l>
+<l>return ()</l>
+</body>
+<docu id="ReadImg">
+<short lang="en_US">initializes image acquisition</short>
+<parameters>
+<parameter id="ImageFiles"/>
+<parameter id="ImagePath"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

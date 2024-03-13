@@ -1,0 +1,1167 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SmartMore.ViMo.Inference</name>
+    </assembly>
+    <members>
+        <member name="T:SmartMore.ViMo.ErrorCode">
+            <summary>
+            错误码
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.ErrorCode.Success">
+            <summary>
+            成功
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.ErrorCode.InvalidArgument">
+            <summary>
+            参数非法
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.ErrorCode.FileNotExists">
+            <summary>
+            文件不存在
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.ErrorCode.InvalidImageData">
+            <summary>
+            图片数据非法
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.ErrorCode.NotInit">
+            <summary>
+            没有进行初始化
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.ErrorCode.ValidateFailed">
+            <summary>
+            检查失败
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.ErrorCode.SolutionLoadFailed">
+            <summary>
+            解决方案加载失败
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.ErrorCode.ModuleCreateFailed">
+            <summary>
+            模块创建失败
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.ErrorCode.PipelinesCreateFailed">
+            <summary>
+            算法方案创建失败
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.ErrorCode.InternalError">
+            <summary>
+            内部错误
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.ErrorCode.LicenseError">
+            <summary>
+            许可错误
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.VimoException">
+            <summary>
+            SDK出错时引发的异常
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.VimoException.Code">
+            <summary>
+            错误码
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.Annotation">
+            <summary>
+            标注
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.Annotation.Score">
+            <summary>
+            置信度
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.Annotation.Label">
+            <summary>
+            标签
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.Annotation.Points">
+            <summary>
+            如果 Response.Type 是检测，points 的含义是 bbox
+            如果是分割，points 组成的 polygon 是Mask的外轮廓
+            如果是分类或无监督分类，points 为空
+            其他情况，points 的含义是 polygon
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.Annotation.Id">
+            <summary>
+            标签id，用于可视化选择颜色
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.AnyResponse">
+            <summary>
+            通用响应
+            </summary>
+        </member>
+        <member name="M:SmartMore.ViMo.AnyResponse.#ctor">
+            <summary>
+            构造空的通用响应
+            </summary>
+        </member>
+        <member name="M:SmartMore.ViMo.AnyResponse.#ctor(SmartMore.ViMo.Response@)">
+            <summary>
+            将具体的响应结果转换成通用结果
+            </summary>
+            <param name="rsp"></param>
+        </member>
+        <member name="P:SmartMore.ViMo.AnyResponse.Annotations">
+            <summary>
+            标签列表
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.ModuleImpl`2.Params">
+            <summary>
+            算法参数
+            </summary>
+        </member>
+        <member name="M:SmartMore.ViMo.ModuleImpl`2.Run(SmartMore.ViMo.Request@)">
+            <summary>
+            推理运行函数
+            </summary>
+            <param name="req"></param>
+        </member>
+        <member name="T:SmartMore.ViMo.Solution">
+            <summary>
+            解决方案
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.Solution.InitOption">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.Solution.InitOption.UseGpu">
+            <summary>
+            是否使用GPU
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.Solution.InitOption.DeviceId">
+            <summary>
+            GPU设备Id
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.Solution.InitOption.ExtraArgs">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:SmartMore.ViMo.Solution.#ctor">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:SmartMore.ViMo.Solution.LoadFromFile(System.String@)">
+            <summary>
+            从文件加载配置
+            </summary>
+            <param name="configPath"></param>
+        </member>
+        <member name="M:SmartMore.ViMo.Solution.LoadFromMemory(System.String@)">
+            <summary>
+            从内存加载配置
+            </summary>
+            <param name="buffer"></param>
+        </member>
+        <member name="M:SmartMore.ViMo.Solution.CreateModule``1(System.String@,System.Boolean,System.Int32)">
+            <summary>
+            用模块id实例化算法模块
+            </summary>
+            <typeparam name="T">算法模块类别，目前支持“IClassificationModule”、“IDetectionModule”、“ISegmentationModule”、“IOcrModule”、“ISequenceOcrModule、“IMultiRoiModule”、“IUADModule”、“IDetRotationModule”</typeparam>
+            <param name="moduleId"></param>
+            <param name="useGpu"></param>
+            <param name="deviceId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SmartMore.ViMo.Solution.CreateModule``1(System.String@,SmartMore.ViMo.Solution.InitOption@)">
+            <summary>
+            用模块id实例化算法模块
+            </summary>
+            <typeparam name="T">算法模块类别，目前支持“IClassificationModule”、“IDetectionModule”、“ISegmentationModule”、“IOcrModule”、“ISequenceOcrModule、“IMultiRoiModule”、“IUADModule”、“IDetRotationModule”</typeparam>
+            <param name="moduleId"></param>
+            <param name="option"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SmartMore.ViMo.Solution.CreatePipelines(System.String@,System.Boolean,System.Int32)">
+            <summary>
+            实例化串联流程，该流程会从初始节点执行到指定的模块
+            </summary>
+            <param name="moduleId"></param>
+            <param name="useGpu"></param>
+            <param name="deviceId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SmartMore.ViMo.Solution.CreatePipelines(System.String@,System.Collections.Generic.Dictionary{System.String,SmartMore.ViMo.Solution.InitOption})">
+            <summary>
+            实例化串联流程，该流程会从初始节点执行到指定的模块
+            </summary>
+            <param name="moduleId"></param>
+            <param name="optionMap"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SmartMore.ViMo.Solution.GetModuleInfo(System.String@)">
+            <summary>
+            根据Id获取模块信息
+            </summary>
+            <param name="moduleId"></param>
+            <returns></returns>
+        </member>
+        <member name="P:SmartMore.ViMo.Solution.ModuleInfoList">
+            <summary>
+            获取当前配置声明的所有模块信息
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.Solution.EdgeList">
+            <summary>
+            获取边集，边集的每个元素是一对模块id
+            </summary>
+        </member>
+        <member name="M:SmartMore.ViMo.Solution.ReleaseHandle">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.LogLevel">
+            <summary>
+            日志级别
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.LogLevel.Error">
+            <summary>
+            错误
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.LogLevel.Warning">
+            <summary>
+            警告
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.LogLevel.Info">
+            <summary>
+            信息
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.LogLevel.Debug">
+            <summary>
+            调试
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.LogLevel.Trace">
+            <summary>
+            跟踪
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.LoggerConfig">
+            <summary>
+            日志配置
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.LoggerConfig.Level">
+            <summary>
+            日志级别
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.LoggerConfig.FilePath">
+            <summary>
+            日志文件存储位置
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.Utils">
+            <summary>
+            工具类
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.Utils.Version">
+            <summary>
+            获取版本号
+            </summary>
+        </member>
+        <member name="M:SmartMore.ViMo.Utils.RoiAlign(OpenCvSharp.Rect@,OpenCvSharp.Point@,OpenCvSharp.Size@)">
+            <summary>
+            位置补正
+            </summary>
+            <param name="roi"></param>
+            <param name="shifting"></param>
+            <param name="padding"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SmartMore.ViMo.Utils.Visualize(SmartMore.ViMo.Response@,OpenCvSharp.Mat@)">
+            <summary>
+            可视化
+            </summary>
+            <param name="rsp"></param>
+            <param name="image"></param>
+        </member>
+        <member name="M:SmartMore.ViMo.Utils.ConvertResponseToBoundingBox(SmartMore.ViMo.Response@)">
+            <summary>
+            将推理结果转换成ROI列表
+            </summary>
+            <param name="rsp"></param>
+            <returns></returns>
+        </member>
+        <member name="P:SmartMore.ViMo.Utils.LoggerConfig">
+            <summary>
+            日志参数
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.Utils.LicenseInfo">
+            <summary>
+            获取授权信息
+            </summary>
+        </member>
+        <member name="M:SmartMore.ViMo.Utils.BindLicenseKey(System.String@)">
+            <summary>
+            在线绑定授权码
+            </summary>
+        </member>
+        <member name="M:SmartMore.ViMo.Utils.UnbindLicenseKey(System.String@)">
+            <summary>
+            在线解绑授权码
+            </summary>
+        </member>
+        <member name="M:SmartMore.ViMo.Utils.RefreshLicenseStatus">
+            <summary>
+            刷新授权状态
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.RoiType">
+            <summary>
+            ROI类别
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.RoiType.Pixel">
+            <summary>
+            像素模式
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.RoiType.Ratio">
+            <summary>
+            百分比模式
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.RoiParams">
+            <summary>
+            ROI参数
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.RoiParams.Type">
+            <summary>
+            Roi类别
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.RoiParams.Move">
+            <summary>
+            中心点移动距离（当 Type 为 RoiType.Pixel 时生效）
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.RoiParams.Size">
+            <summary>
+            ROI最终尺寸大小（当 Type 为 RoiType.Pixel 时生效）
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.RoiParams.MoveRatio">
+            <summary>
+            中心点移动距离与原ROI大小的比值（当 Type 为 RoiType.Ratio 时生效）
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.RoiParams.SizeRatio">
+            <summary>
+            新的ROI大小与原大小比值（当 Type 为 RoiType.Ratio 时生效）
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.ClassificationParams">
+            <summary>
+            分类模块参数
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.ClassificationParams.ScoreThresholds">
+            <summary>
+            按特征名称设置置信度阈值，如果没有指定则使用默认阈值
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.ClassificationParams.Roi">
+            <summary>
+            ROI参数
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.DetectionParams">
+            <summary>
+            检测模块参数
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.DetectionParams.ScoreThresholds">
+            <summary>
+            按特征名称设置置信度阈值，如果没有指定则使用默认阈值
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.DetectionParams.IoUThreshold">
+            <summary>
+            设置IoU阈值，如果没有指定则使用默认阈值
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.DetectionParams.Roi">
+            <summary>
+            ROI参数
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.OutputOrder">
+            <summary>
+            OCR输出顺序
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.OutputOrder.Default">
+            <summary>
+            默认顺序
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.OutputOrder.LeftToRight">
+            <summary>
+            按中心从左到右排序
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.OutputOrder.TopToBottom">
+            <summary>
+            按中心从上到下排序
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.OcrParams">
+            <summary>
+            OCR模块参数
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.OcrParams.ScoreThresholds">
+            <summary>
+            按特征名称设置置信度阈值，如果没有指定则使用默认阈值
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.OcrParams.IoUThreshold">
+            <summary>
+            设置IoU阈值，如果没有指定则使用默认阈值
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.OcrParams.Order">
+            <summary>
+            输出顺序
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.OcrParams.Roi">
+            <summary>
+            ROI参数
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.SegmentationRegionParams">
+            <summary>
+            分割区域模块参数
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.SegmentationRegionParams.Name">
+            <summary>
+            区域名称
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.SegmentationRegionParams.Polygon">
+            <summary>
+            区域轮廓
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.SegmentationRegionParams.AreaThresholds">
+            <summary>
+            按特征名称设置面积阈值，如果没有指定则使用默认阈值
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.SegmentationRegionParams.WidthThresholds">
+            <summary>
+            按特征名称设置边界框宽度阈值，如果没有指定则使用默认阈值
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.SegmentationRegionParams.HeightThresholds">
+            <summary>
+            按特征名称设置边界框高度阈值，如果没有指定则使用默认阈值
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.SegmentationParams">
+            <summary>
+            分割模块参数
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.SegmentationParams.AreaThresholds">
+            <summary>
+            按特征名称设置面积阈值，如果没有指定则使用默认阈值
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.SegmentationParams.WidthThresholds">
+            <summary>
+            按特征名称设置边界框宽度阈值，如果没有指定则使用默认阈值
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.SegmentationParams.HeightThresholds">
+            <summary>
+            按特征名称设置边界框高度阈值，如果没有指定则使用默认阈值
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.SegmentationParams.Roi">
+            <summary>
+            ROI参数
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.SegmentationParams.DisableAreas">
+            <summary>
+            屏蔽区域
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.SegmentationParams.FilterAreas">
+            <summary>
+            区域级别后处理
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.SequenceOcrParams">
+            <summary>
+            OCR模块参数
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.SequenceOcrParams.ScoreThreshold">
+            <summary>
+            设置置信度阈值，如果没有指定则使用默认阈值
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.SequenceOcrParams.UnclipRatio">
+            <summary>
+            控制从mask得到多边形文本预测框时的膨胀比例
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.SequenceOcrParams.UseDirectionCls">
+            <summary>
+            是否使用文本方向分类模型
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.SequenceOcrParams.Roi">
+            <summary>
+            ROI参数
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.MultiRoiType">
+            <summary>
+            多ROI类型
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.MultiRoiType.Pixel">
+            <summary>
+            像素模式
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.MultiRoiType.Ratio">
+            <summary>
+            比例模式
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.MultiRoiBox">
+            <summary>
+            ROI参数
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.MultiRoiBox.Type">
+            <summary>
+            ROI类型
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.MultiRoiBox.X">
+            <summary>
+            X方向移动位置
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.MultiRoiBox.Y">
+            <summary>
+            Y方向移动位置
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.MultiRoiBox.Width">
+            <summary>
+            宽
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.MultiRoiBox.Height">
+            <summary>
+            高
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.MultiRoiParams">
+            <summary>
+            多ROI参数
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.MultiRoiParams.Boxes">
+            <summary>
+            ROI参数列表
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.UADParams">
+            <summary>
+            无监督参数
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.UADParams.Roi">
+            <summary>
+            ROI参数
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.UADParams.AbnormalThreshold">
+            <summary>
+            异常阈值
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.DetRotationParams">
+            <summary>
+            旋转矩形检测模块参数
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.DetRotationParams.ScoreThresholds">
+            <summary>
+            按特征名称设置置信度阈值，如果没有指定则使用默认阈值
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.DetRotationParams.IoUThreshold">
+            <summary>
+            设置IoU阈值，如果没有指定则使用默认阈值
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.DetRotationParams.Roi">
+            <summary>
+            ROI参数
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.Request">
+            <summary>
+            推理请求
+            </summary>
+        </member>
+        <member name="M:SmartMore.ViMo.Request.#ctor">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:SmartMore.ViMo.Request.#ctor(OpenCvSharp.Mat)">
+            <summary>
+             只用图片构造推理请求，roi 为整张图片
+            </summary>
+            <param name="image">需要推理的图片</param>
+        </member>
+        <member name="M:SmartMore.ViMo.Request.#ctor(OpenCvSharp.Mat,OpenCvSharp.Rect)">
+            <summary>
+            用图片和ROI构造推理请求
+            </summary>
+            <param name="image">需要推理的图片</param>
+            <param name="roi">需要推理的区域</param>
+        </member>
+        <member name="P:SmartMore.ViMo.Request.Image">
+            <summary>
+            推理图片
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.Request.Roi">
+            <summary>
+            推理ROI
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.ModuleType">
+            <summary>
+            模块类型
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.ModuleType.None">
+            <summary>
+            空
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.ModuleType.Classification">
+            <summary>
+            分类
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.ModuleType.Detection">
+            <summary>
+            检测
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.ModuleType.Ocr">
+            <summary>
+            OCR
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.ModuleType.Segmentation">
+            <summary>
+            分割
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.ModuleType.SequenceOcr">
+            <summary>
+            序列OCR
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.ModuleType.MultiRoi">
+            <summary>
+            多ROI
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.ModuleType.UAD">
+            <summary>
+            无监督
+            </summary>
+        </member>
+        <member name="F:SmartMore.ViMo.ModuleType.DetRotation">
+            <summary>
+            旋转矩形检测
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.Response">
+            <summary>
+            推理结果基类
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.Response.Type">
+            <summary>
+            模块类别
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.Response.Roi">
+            <summary>
+            实际用于推理的ROI，只适用于 SmartMore.ViMo.ModuleInfo.ModelVersion >= 4.0的模型
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.ClassLabel">
+            <summary>
+            分类标签
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.ClassLabel.Id">
+            <summary>
+            标签id，用于可视化选择颜色
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.ClassLabel.Label">
+            <summary>
+            标签名
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.ClassLabel.Score">
+            <summary>
+            置信度，范围是 [0-1]
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.ClassificationResponse">
+            <summary>
+            分类推理结果
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.ClassificationResponse.Labels">
+            <summary>
+            分类标签列表
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.DetBox">
+            <summary>
+            检测框
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.DetBox.Id">
+            <summary>
+            标签id，用于可视化选择颜色
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.DetBox.Label">
+            <summary>
+            标签名
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.DetBox.Score">
+            <summary>
+            置信度，范围是 [0-1]
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.DetBox.BoundingBox">
+            <summary>
+            组成检测框的四个点，起始点为左上角的点，顺时针排序
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.DetectionResponse">
+            <summary>
+            检测推理结果
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.DetectionResponse.Boxes">
+            <summary>
+            检测框列表
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.TextBlock">
+            <summary>
+            OCR文本块
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.TextBlock.Id">
+            <summary>
+            标签id，用于可视化选择颜色
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.TextBlock.Label">
+            <summary>
+            OCR识别出的字符
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.TextBlock.Comment">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.TextBlock.Score">
+            <summary>
+            置信度，范围是 [0-1]
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.TextBlock.Polygon">
+            <summary>
+            组成OCR块的多边形轮廓，起始点为左上角的点，顺时针排序
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.OcrResponse">
+            <summary>
+            OCR推理结果
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.OcrResponse.Blocks">
+            <summary>
+            OCR文本块列表
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.SegmentationResponse">
+            <summary>
+            分割推理结果
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.SegmentationResponse.Mask">
+            <summary>
+            分割 Mask，单通道图片，尺寸和输入图相同，像素值范围是 [0-255] ，含义为标签的下标图，通常0表示背景
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.SegmentationResponse.LabelMap">
+            <summary>
+            标签与下标组成的字典
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.MultiRoiResponse">
+            <summary>
+            多ROI结果
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.MultiRoiResponse.Rois">
+            ROI列表 顺序：自左到右，自上到下
+        </member>
+        <member name="T:SmartMore.ViMo.UADResponse">
+            <summary>
+            无监督推理结果
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.UADResponse.Label">
+            <summary>
+            标签
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.UADResponse.AnomalyScore">
+            <summary>
+            异常分数
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.UADResponse.Heatmap">
+            <summary>
+            热力图
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.RotatedDetBox">
+            <summary>
+            旋转矩形检测框
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.RotatedDetBox.Id">
+            <summary>
+            标签id，用于可视化选择颜色
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.RotatedDetBox.Label">
+            <summary>
+            标签名
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.RotatedDetBox.Score">
+            <summary>
+            置信度，范围是 [0-1]
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.RotatedDetBox.Angle">
+            <summary>
+            角度
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.RotatedDetBox.Polys">
+            <summary>
+            组成检测框的四个点
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.DetRotationResponse">
+            <summary>
+            旋转矩形检测推理结果
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.DetRotationResponse.Boxes">
+            <summary>
+            检测框列表
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.IClassificationModule">
+            <summary>
+            分类模块接口
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.IClassificationModule.Params">
+            <summary>
+            自定义参数
+            </summary>
+        </member>
+        <member name="M:SmartMore.ViMo.IClassificationModule.Run(SmartMore.ViMo.Request@,SmartMore.ViMo.ClassificationResponse@)">
+            <summary>
+            运行推理
+            </summary>
+            <param name="req">推理请求</param>
+            <param name="rsp">推理结果</param>
+        </member>
+        <member name="T:SmartMore.ViMo.IDetectionModule">
+            <summary>
+            检测模块
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.IDetectionModule.Params">
+            <summary>
+            自定义参数
+            </summary>
+        </member>
+        <member name="M:SmartMore.ViMo.IDetectionModule.Run(SmartMore.ViMo.Request@,SmartMore.ViMo.DetectionResponse@)">
+            <summary>
+            运行检测推理
+            </summary>
+            <param name="req">推理请求</param>
+            <param name="rsp">推理结果</param>
+        </member>
+        <member name="T:SmartMore.ViMo.IDetRotationModule">
+            <summary>
+            旋转矩形检测模块接口
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.IDetRotationModule.Params">
+            <summary>
+            自定义参数
+            </summary>
+        </member>
+        <member name="M:SmartMore.ViMo.IDetRotationModule.Run(SmartMore.ViMo.Request@,SmartMore.ViMo.DetRotationResponse@)">
+            <summary>
+            运行推理
+            </summary>
+            <param name="req">推理请求</param>
+            <param name="rsp">推理结果</param>
+        </member>
+        <member name="T:SmartMore.ViMo.ModuleInfo">
+            <summary>
+            模块基本信息
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.ModuleInfo.Id">
+            <summary>
+            模块id
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.ModuleInfo.Type">
+            <summary>
+            算法类别
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.ModuleInfo.Features">
+            <summary>
+            特征列表
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.ModuleInfo.ModelVersion">
+            <summary>
+            模型版本
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.ModuleInfo.DefaultShifting">
+            <summary>
+            平台上设置的偏移量，默认只在Pipelines模式启用
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.ModuleInfo.DefaultPadding">
+            <summary>
+            平台上设置的ROI伸缩量，默认只在Pipelines模式启用
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.ModuleInfo.Name">
+            <summary>
+            模块名称
+            </summary>
+        </member>
+        <member name="T:SmartMore.ViMo.IModule">
+            <summary>
+            算法模块基类
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.IModule.Info">
+            <summary>
+            获取算法模块信息
+            </summary>
+        </member>
+        <member name="M:SmartMore.ViMo.IModule.Run(SmartMore.ViMo.Request@)">
+            <summary>
+            运行推理
+            </summary>
+            <param name="req">推理请求</param>
+            <returns>推理结果</returns>
+        </member>
+        <member name="M:SmartMore.ViMo.IModule.LoadParams(System.String@)">
+            <summary>
+            加载参数配置
+            </summary>
+            <param name="paramsPath"></param>
+        </member>
+        <member name="M:SmartMore.ViMo.IModule.SaveParams(System.String@)">
+            <summary>
+            保存参数配置
+            </summary>
+            <param name="paramsPath"></param>
+        </member>
+        <member name="T:SmartMore.ViMo.IMultiRoiModule">
+            <summary>
+            多ROI模块接口
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.IMultiRoiModule.Params">
+            <summary>
+            自定义参数
+            </summary>
+        </member>
+        <member name="M:SmartMore.ViMo.IMultiRoiModule.Run(SmartMore.ViMo.Request@,SmartMore.ViMo.MultiRoiResponse@)">
+            <summary>
+            运行推理
+            </summary>
+            <param name="req">推理请求</param>
+            <param name="rsp">推理结果</param>
+        </member>
+        <member name="T:SmartMore.ViMo.IOcrModule">
+            <summary>
+            OCR模块
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.IOcrModule.Params">
+            <summary>
+            自定义参数
+            </summary>
+        </member>
+        <member name="M:SmartMore.ViMo.IOcrModule.Run(SmartMore.ViMo.Request@,SmartMore.ViMo.OcrResponse@)">
+            <summary>
+            运行OCR推理
+            </summary>
+            <param name="req">推理请求</param>
+            <param name="rsp">推理结果</param>
+        </member>
+        <member name="T:SmartMore.ViMo.ResponseList`1">
+            <summary>
+            推理结果列表
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:SmartMore.ViMo.ResponseList`1.#ctor(System.Collections.Generic.List{System.Tuple{OpenCvSharp.Rect,`0}})">
+            <summary>
+            构造推理结果列表
+            </summary>
+            <param name="collection"></param>
+        </member>
+        <member name="T:SmartMore.ViMo.IPipelines">
+            <summary>
+            串联方案
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.IPipelines.ModuleType">
+            <summary>
+            模块类型
+            </summary>
+        </member>
+        <member name="M:SmartMore.ViMo.IPipelines.Run``1(SmartMore.ViMo.Request@,SmartMore.ViMo.ResponseList{``0}@)">
+            <summary>
+            运行算法方案
+            </summary>
+            <typeparam name="T">推理结果类别，目前只支持 “ClassificationResponse”、“DetectionResponse”、“OcrResponse”、“SegmentationResponse” 四种类别</typeparam>
+            <param name="req">推理请求</param>
+            <param name="rsps">推理结果列表</param>
+        </member>
+        <member name="T:SmartMore.ViMo.ISegmentationModule">
+            <summary>
+            分割模块
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.ISegmentationModule.Params">
+            <summary>
+            自定义参数
+            </summary>
+        </member>
+        <member name="M:SmartMore.ViMo.ISegmentationModule.Run(SmartMore.ViMo.Request@,SmartMore.ViMo.SegmentationResponse@)">
+            <summary>
+            运行分割推理
+            </summary>
+            <param name="req">推理请求</param>
+            <param name="rsp">推理结果</param>
+        </member>
+        <member name="T:SmartMore.ViMo.ISequenceOcrModule">
+            <summary>
+            序列OCR模块
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.ISequenceOcrModule.Params">
+            <summary>
+            自定义参数
+            </summary>
+        </member>
+        <member name="M:SmartMore.ViMo.ISequenceOcrModule.Run(SmartMore.ViMo.Request@,SmartMore.ViMo.OcrResponse@)">
+            <summary>
+            运行序列OCR推理
+            </summary>
+            <param name="req">推理请求</param>
+            <param name="rsp">推理结果</param>
+        </member>
+        <member name="T:SmartMore.ViMo.IUADModule">
+            <summary>
+            无监督分类模块接口
+            </summary>
+        </member>
+        <member name="P:SmartMore.ViMo.IUADModule.Params">
+            <summary>
+            自定义参数
+            </summary>
+        </member>
+        <member name="M:SmartMore.ViMo.IUADModule.Run(SmartMore.ViMo.Request@,SmartMore.ViMo.UADResponse@)">
+            <summary>
+            运行推理
+            </summary>
+            <param name="req">推理请求</param>
+            <param name="rsp">推理结果</param>
+        </member>
+    </members>
+</doc>

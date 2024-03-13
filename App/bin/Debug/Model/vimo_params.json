@@ -1,0 +1,43 @@
+{
+ "module_params": {
+  "2": {
+   "roi": {
+    "type": "ratio",
+    "move_ratio": {
+     "x": 0.105902776,
+     "y": 0.007201646
+    },
+    "size_ratio": {
+     "x": 0.6878858,
+     "y": 0.7983539
+    }
+   },
+   "score_thresholds": {
+    "检测": 0.4
+   },
+   "iou_threshold": 0.1
+  },
+  "3": {
+   "roi": {
+    "type": "ratio",
+    "move_ratio": {
+     "x": 0,
+     "y": 0
+    },
+    "size_ratio": {
+     "x": 1,
+     "y": 1
+    }
+   },
+   "height_thresholds": {
+    "NG": 0
+   },
+   "width_thresholds": {
+    "NG": 0
+   },
+   "area_thresholds": {
+    "NG": 5
+   }
+  }
+ }
+}

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Root xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <System>
+    <ProjectName>延锋3D量测系统</ProjectName>
+    <FullScreen>false</FullScreen>
+  </System>
+  <PLC>
+    <IP>172.16.2.123</IP>
+    <Port>10000</Port>
+    <Slot>1</Slot>
+    <Rack>0</Rack>
+  </PLC>
+  <SaveImage>
+    <Item Name="OK渲染图" Path="D:\Image" ImageType=".jpg" SaveEnable="true" />
+    <Item Name="NG渲染图" Path="D:\Image" ImageType=".jpg" SaveEnable="true" />
+    <Item Name="OK原图" Path="D:\Image" ImageType=".png" SaveEnable="true" />
+    <Item Name="NG原图" Path="D:\Image" ImageType=".png" SaveEnable="true" />
+  </SaveImage>
+  <SDK>
+    <Item Name="Station1" ConfigPath=".\Model\model.vimosln" GPU="true" DeviceID="0" TypeName="TSTM" SolutionId="3" RunEnable="true" />
+  </SDK>
+  <Device>
+    <Item ProductModel="产品1" EquipmentNumber="24" ModelVer="V1.1" ModelDate="操作员" CurBatch="789" />
+  </Device>
+  <SaveTime>
+    <Item Name="mask" SaveDays="16" SaveDaysEnable="false" SaveSize="16" SaveSizeEnable="false" />
+    <Item Name="origin" SaveDays="24" SaveDaysEnable="false" SaveSize="24" SaveSizeEnable="false" />
+  </SaveTime>
+</Root>
